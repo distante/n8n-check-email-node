@@ -1,6 +1,6 @@
 {
   "name": "@saninn/n8n-nodes-email-check",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "checks the email on manual request",
   "keywords": [
     "n8n-community-node-package"
