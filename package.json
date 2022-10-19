@@ -1,16 +1,13 @@
 {
-  "name": "n8n-nodes-email-check",
+  "name": "@saninn/n8n-nodes-email-check",
   "version": "0.1.0",
   "description": "checks the email on manual request",
   "keywords": [
     "n8n-community-node-package"
   ],
+  "author": "Saninn Salas Diaz",
   "license": "MIT",
-  "homepage": "",
-  "author": {
-    "name": "",
-    "email": ""
-  },
+  "homepage": "https://saninnsalas.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/distante/n8n-check-email-node.git"
@@ -30,13 +27,9 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js",
       "dist/credentials/ReadEmailOnceApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js",
       "dist/nodes/ReadEmailOnce/ReadEmailOnce.node.js"
     ]
   },
