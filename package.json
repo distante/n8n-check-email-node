@@ -8,6 +8,9 @@
   "author": {
     "name": "Saninn Salas Diaz"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "homepage": "https://saninnsalas.com",
   "repository": {
