@@ -48,7 +48,7 @@ export class ReadEmailOnce implements INodeType {
 					{
 						name: ReadEmailOnceOptionReadState.All,
 						value: ReadEmailOnceOptionReadState.All,
-					}]
+					}],
 			},
 			{
 				displayName: 'Mark As Read',
@@ -56,7 +56,7 @@ export class ReadEmailOnce implements INodeType {
 				type: 'boolean',
 				default: true,
 				description: 'Whether to mark the messages as read',
-			}
+			},
 		],
 	};
 
@@ -65,7 +65,7 @@ export class ReadEmailOnce implements INodeType {
 	// with whatever the user has entered.
 	// You can make async calls and use `await`.
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		const messagesToMarkAsRead: {uid: number | string, subject: string}[] = []
+		const messagesToMarkAsRead: Array<{uid: number | string, subject: string}> = [];
 		const seenFlag = '\\Seen';   	// 'Seen', '\Seen', '\\Seen', '\\\Seen', '\\\\Seen', 'seen'
 		const options: ReadEmailOnceInputOptions = getOptions(this);
 		const INBOX = 'INBOX';
@@ -99,15 +99,15 @@ export class ReadEmailOnce implements INodeType {
 			const fetchOptions: SearchObject = {};
 
 			if (options.kindOfEmailsToGet === ReadEmailOnceOptionReadState.Read) {
-				fetchOptions.seen = true
+				fetchOptions.seen = true;
 			} else if (options.kindOfEmailsToGet === ReadEmailOnceOptionReadState.Unread) {
-				fetchOptions.seen = false
+				fetchOptions.seen = false;
 			}
 
 			console.log('\noptions', options);
 			console.log('fetch options', fetchOptions);
 
-			for await (let message of client.fetch(fetchOptions, { source: true, uid: true, flags: true })) {
+			for await (const message of client.fetch(fetchOptions, { source: true, uid: true, flags: true })) {
 				const parsed = await simpleParser(message.source, {
 					skipHtmlToText: true,
 				});
@@ -122,11 +122,11 @@ export class ReadEmailOnce implements INodeType {
 			}
 
 			if (messagesToMarkAsRead.length) {
-				console.log('Marking messages as read')
+				console.log('Marking messages as read');
 				await client.mailboxOpen(INBOX);
 
-				for await (let message of messagesToMarkAsRead) {
-					console.log(`- Marking ${message.subject}`)
+				for await (const message of messagesToMarkAsRead) {
+					console.log(`- Marking ${message.subject}`);
 					await client.messageFlagsAdd({ uid: message.uid as string  }, [seenFlag]);
 				}
 
@@ -137,7 +137,7 @@ export class ReadEmailOnce implements INodeType {
 
 
 		} catch (e) {
-			console.error('There was an error with the Read Email OnceNode\n', e)
+			console.error('There was an error with the Read Email OnceNode\n', e);
 		} finally {
 			// Make sure lock is released, otherwise next `getMailboxLock()` never returns
 			lock.release();
@@ -149,10 +149,10 @@ export class ReadEmailOnce implements INodeType {
 		console.log(`found ${emails.length} emails`);
 		emails.forEach(e => {
 			console.log(e.subject);
-		})
+		});
 		const returned: INodeExecutionData[] = emails.map(e => {
-			return {json: JSON.parse(JSON.stringify(e))}
-		})
+			return {json: JSON.parse(JSON.stringify(e))};
+		});
 
 
 		return this.prepareOutputData(returned);
@@ -160,11 +160,12 @@ export class ReadEmailOnce implements INodeType {
 }
 
 function getOptions(executeThis: IExecuteFunctions): ReadEmailOnceInputOptions {
-	const options: Partial<ReadEmailOnceInputOptions> = {}
+	const options: Partial<ReadEmailOnceInputOptions> = {};
 
 	Object.values(ReadEmailOnceOptionName).forEach(name => {
+		// tslint:disable-next-line:no-any
 		options[name] = executeThis.getNodeParameter(name, 0) as any;
 	});
 
-	return options as ReadEmailOnceInputOptions
+	return options as ReadEmailOnceInputOptions;
 }

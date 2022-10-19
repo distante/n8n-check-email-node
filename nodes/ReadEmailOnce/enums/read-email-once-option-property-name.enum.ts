@@ -1,4 +1,4 @@
 export enum ReadEmailOnceOptionName {
 	KindOfEmailsToGet = 'kindOfEmailsToGet',
-	MarkAsRead = 'markAsRead'
+	MarkAsRead = 'markAsRead',
 }

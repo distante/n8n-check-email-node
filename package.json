@@ -5,7 +5,9 @@
   "keywords": [
     "n8n-community-node-package"
   ],
-  "author": "Saninn Salas Diaz",
+  "author": {
+    "name": "Saninn Salas Diaz"
+  },
   "license": "MIT",
   "homepage": "https://saninnsalas.com",
   "repository": {
